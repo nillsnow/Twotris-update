@@ -17,6 +17,8 @@ public class MiddlePart : MonoBehaviour
     public GameObject paddleLeft;
     [HideInInspector]
     public Grabby pLeft;
+    [Space]
+    public MagnetPickupTetroManager magnetPickupTetroManager;
 
     public GameObject paddleRight;
     [HideInInspector]
@@ -75,20 +77,19 @@ public class MiddlePart : MonoBehaviour
         if (paddleRight)
             pRight = paddleRight.GetComponent<Grabby>();
 
-
         sLeft.middle = this;
         sRight.middle = this;
 
         if (pLeft && sLeft)
         {
             pLeft.screen = sLeft;
-            pLeft.tetrominoArray = tetrominoArray;
         }
         if (pRight && sRight)
         {
             pRight.screen = sRight;
-            pRight.tetrominoArray = tetrominoArray;
         }
+
+        magnetPickupTetroManager.tetrominoArray = tetrominoArray;
     }
 
 
@@ -202,7 +203,7 @@ public class MiddlePart : MonoBehaviour
             scoreDif = Mathf.Abs(sRight.score + sRight.curScore - sLeft.score + sLeft.curScore);
         }
 
-        Debug.Log("score: " + scoreDif + " > " + potentionalSpawn.minScoreDifference.ToString() + "weight" + weight + " < c" + chance + " potential?: " + potentionalSpawn.powerup.name);
+        Debug.Log("score: " + scoreDif + " > " + potentionalSpawn.minScoreDifference.ToString() + ", weight" + weight + " < c" + chance + ", potential: " + potentionalSpawn.powerup.name);
 
         //for powerups that are too game breaking (need a huge score difference)
         if (potentionalSpawn.minScoreDifference > 0 && scoreDif < potentionalSpawn.minScoreDifference)

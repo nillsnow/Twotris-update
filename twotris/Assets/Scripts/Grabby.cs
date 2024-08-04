@@ -17,6 +17,12 @@ public class Grabby : MonoBehaviour
     [Space(5)]
     public Transform maxBottomLeft;
     public Transform maxTopRight;
+    [Space]
+    public Grabby otherGrabby;
+    public MagnetPickupTetroManager magnetPickupTetroManager;
+    [Space]
+    public int priority; //chosen at random, decides which magnet picks up blocks first (milliseconds of delay)
+    public int lastGrabbedTetrominoInstanceID = 0;
 
     private SpriteRenderer sr;
     private Vector3 startPos;
@@ -27,15 +33,15 @@ public class Grabby : MonoBehaviour
     private bool singleShotAnim;
     private bool singleShotAnim_;
     private Animator anim;
-
+    
     private void Start()
     {
         startPos = transform.position;
         sr = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-    }
+		anim = GetComponent<Animator>();
+	}
 
-    private void Update()
+	private void Update()
     {
         if (isMoving && !screen.isDead) {
             if (singleShotAnim_) //fade in after waking up
@@ -94,7 +100,7 @@ public class Grabby : MonoBehaviour
         //sr.enabled = isMoving;
     }  
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (screen.hasActiveBlock)
             return;
@@ -113,14 +119,6 @@ public class Grabby : MonoBehaviour
         if (!te.isSpawned)
             return;
 
-        foreach (MiddlePart.tetrominoes t in tetrominoArray)
-        {
-            if (collision.name.StartsWith(t.shape.name))
-            {
-                screen.nextToSpawn = t.shape;
-                Destroy(collision.gameObject);
-                return;
-            }
-        }
+        magnetPickupTetroManager.ValidatePickup(this, te, collision);
     }
 }

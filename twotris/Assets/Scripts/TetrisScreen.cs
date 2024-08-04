@@ -107,7 +107,7 @@ public class TetrisScreen : MonoBehaviour
 
         if (nextToSpawn)
         {
-            if (isDead || hasActiveBlock)
+            if (isDead/* || hasActiveBlock*/)
             {
                 nextToSpawn = null;
                 return;

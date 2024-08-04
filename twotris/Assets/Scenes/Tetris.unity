@@ -1001,6 +1001,10 @@ MonoBehaviour:
   speed: 6
   maxBottomLeft: {fileID: 1330669721}
   maxTopRight: {fileID: 824903813}
+  otherGrabby: {fileID: 1556575126}
+  magnetPickupTetroManager: {fileID: 1331555825}
+  priority: 0
+  lastGrabbedTetrominoInstanceID: 0
 --- !u!212 &337336885
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8297,6 +8301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1331555824}
   - component: {fileID: 1331555823}
+  - component: {fileID: 1331555825}
   m_Layer: 0
   m_Name: Middle
   m_TagString: Untagged
@@ -8322,6 +8327,7 @@ MonoBehaviour:
   sRight: {fileID: 0}
   paddleLeft: {fileID: 1556575122}
   pLeft: {fileID: 0}
+  magnetPickupTetroManager: {fileID: 1331555825}
   paddleRight: {fileID: 337336881}
   pRight: {fileID: 0}
   gravityScale: 4
@@ -8418,6 +8424,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1331555825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331555822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22992c6217f3e02439e7d8007de11a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magnetLeft: {fileID: 1556575126}
+  magnetRight: {fileID: 337336884}
+  tetrominoArray: []
 --- !u!1 &1463118318 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5430201027024300841, guid: 15a889541a006a847a7f2a91530d7c02,
@@ -8844,6 +8865,10 @@ MonoBehaviour:
   speed: 6
   maxBottomLeft: {fileID: 1293111922}
   maxTopRight: {fileID: 325243498}
+  otherGrabby: {fileID: 337336884}
+  magnetPickupTetroManager: {fileID: 1331555825}
+  priority: 0
+  lastGrabbedTetrominoInstanceID: 0
 --- !u!95 &1556575127
 Animator:
   serializedVersion: 3

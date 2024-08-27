@@ -51,6 +51,8 @@ public class GameMaster : MonoBehaviour
     public float nextTetrominoSpawn = 0.0f;
     [HideInInspector]
     public float nextScreenClear = 0.0f;
+    [HideInInspector]
+    public float screenClearRemainingTime = 0.0f;
 
     [Header("Debug")]
     [Space(20)]
@@ -175,6 +177,8 @@ public class GameMaster : MonoBehaviour
                     middle.CalculateScoreClear();
                     screnClearsDone++;
                 }
+
+                screenClearRemainingTime = nextScreenClear - Time.time;
 
                 if (screnClearsDone >= curDifficulty.screensClears)
                     state = GameStates.GAME_END; //end game if screen clears

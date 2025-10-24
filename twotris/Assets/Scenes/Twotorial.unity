@@ -925,6 +925,7 @@ RectTransform:
   m_Children:
   - {fileID: 99233313}
   - {fileID: 1111052810}
+  - {fileID: 1294233487}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2098,8 +2099,8 @@ MonoBehaviour:
   cam: {fileID: 575175397}
   difficulties:
   - difficultyName: Twotorial
-    screenClearDelay: 20
-    screensClears: 2
+    screenClearDelay: 30
+    screensClears: 3
     tetrominoSpawn: 1.5
     tetrominoGravity: 4
     powerupGravity: 4.3
@@ -2146,14 +2147,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93ebc03b3b18d3c40855c786f43adf03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  splashHandlerer: {fileID: 1951646503}
+  splashHandlerer: {fileID: 1294233488}
   debugStepUI: {fileID: 856640594}
   twotorialSteps:
   - stepName: 0Welcome
     mainSplashEnabled: 1
     mainSplashText: Welcome to Twotris!
+    mainSplashDuration: 0
     secondarySplashEnabled: 1
     secondarySplashText: "The ultimate friendship destroying block game\u2122"
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2173,12 +2176,11 @@ MonoBehaviour:
     includedInts: []
   - stepName: 1Controls
     mainSplashEnabled: 1
-    mainSplashText: 'Each of you have your own block board
-
-      and a magnet you
-      can control.'
+    mainSplashText: Each of you have your own block board and a magnet.
+    mainSplashDuration: 0
     secondarySplashEnabled: 0
-    secondarySplashText: 
+    secondarySplashText: This is also how you control pieces you pick up!
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2200,12 +2202,11 @@ MonoBehaviour:
     includedInts: []
   - stepName: 2Board
     mainSplashEnabled: 1
-    mainSplashText: 'You want to fill your board up
-
-      with as many pieces you
-      can grab.'
-    secondarySplashEnabled: 0
-    secondarySplashText: 
+    mainSplashText: Grab as many pieces you can!
+    mainSplashDuration: 0
+    secondarySplashEnabled: 1
+    secondarySplashText: And place them down like in T*tris! (Transformative Content)
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2229,11 +2230,11 @@ MonoBehaviour:
       Int: 7
   - stepName: 3PWR-Bombs
     mainSplashEnabled: 1
-    mainSplashText: 'Alongside normal pieces,
-
-      you may also spot special powerups!'
+    mainSplashText: Alongside normal pieces, you may also spot special powerups!
+    mainSplashDuration: 0
     secondarySplashEnabled: 1
     secondarySplashText: This one is more of a power-down! Ha!
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2256,9 +2257,11 @@ MonoBehaviour:
       Int: 2
   - stepName: 4PWR-Lines
     mainSplashEnabled: 1
-    mainSplashText: Path those holes up with this line filler!
+    mainSplashText: Patch those holes up with this line filler!
+    mainSplashDuration: 0
     secondarySplashEnabled: 0
-    secondarySplashText: 
+    secondarySplashText: Those non-full blocks don't give any score.
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2278,12 +2281,14 @@ MonoBehaviour:
     includedGameObjects: []
     includedInts:
     - name: minLinesPerScreen
-      Int: 2
+      Int: 3
   - stepName: 5StartTime
     mainSplashEnabled: 1
-    mainSplashText: "As you can see \u2013 blocks don't clear\nwhen you fill a row."
-    secondarySplashEnabled: 0
-    secondarySplashText: 
+    mainSplashText: "As you can see \u2013 blocks don't clear when you fill a row."
+    mainSplashDuration: 0
+    secondarySplashEnabled: 1
+    secondarySplashText: Be patient!
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2303,12 +2308,12 @@ MonoBehaviour:
     includedInts: []
   - stepName: 6ShowRounds
     mainSplashEnabled: 1
-    mainSplashText: 'Every game is separated into rounds.
-
-      Each round lasts
-      some time.'
+    mainSplashText: 'Every game is separated into timed rounds. '
+    mainSplashDuration: 0
     secondarySplashEnabled: 1
-    secondarySplashText: Indicated by a number on the bottom.
+    secondarySplashText: Remaining rounds and round time is shown on the bottom of
+      the screen.
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2328,12 +2333,11 @@ MonoBehaviour:
     includedInts: []
   - stepName: 7PWR-Time
     mainSplashEnabled: 1
-    mainSplashText: 'If you have a nice board already,
-
-      you can speed the round
-      up!'
+    mainSplashText: If you have a nice board already, you can speed the round up!
+    mainSplashDuration: 0
     secondarySplashEnabled: 1
-    secondarySplashText: Using this round powerup.
+    secondarySplashText: Using this round speedup powerup.
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2354,11 +2358,11 @@ MonoBehaviour:
     includedInts: []
   - stepName: 8EndRound
     mainSplashEnabled: 1
-    mainSplashText: 'At the end of each round, the points
-
-      get rounded up.'
+    mainSplashText: At the end of each round, the points get rounded up.
+    mainSplashDuration: 0
     secondarySplashEnabled: 0
     secondarySplashText: 
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2379,8 +2383,10 @@ MonoBehaviour:
   - stepName: 9Points
     mainSplashEnabled: 1
     mainSplashText: Each full block and filled line gives some points.
+    mainSplashDuration: 0
     secondarySplashEnabled: 1
     secondarySplashText: I froze the time for better understanding.
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2401,8 +2407,10 @@ MonoBehaviour:
   - stepName: 10OverflowGame
     mainSplashEnabled: 1
     mainSplashText: Try to play for a bit.
+    mainSplashDuration: 0
     secondarySplashEnabled: 0
     secondarySplashText: 
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2419,15 +2427,17 @@ MonoBehaviour:
       weightLosing: 0
       minScoreDifference: 0
     includedGameObjects: []
-    includedInts: []
+    includedInts:
+    - name: bottomFilledLines
+      Int: 5
   - stepName: 11OverfillExplanation
     mainSplashEnabled: 1
     mainSplashText: Don't get too greedy!
+    mainSplashDuration: 0
     secondarySplashEnabled: 1
-    secondarySplashText: 'If you overfill your board, you''ll get
-
-      0 points
-      for the entire round! '
+    secondarySplashText: 'If you overflow your board, you''ll get 0 points for the
+      entire round! '
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2448,8 +2458,10 @@ MonoBehaviour:
   - stepName: 12Playing
     mainSplashEnabled: 1
     mainSplashText: That's it, you're ready!
+    mainSplashDuration: 0
     secondarySplashEnabled: 1
     secondarySplashText: I'll let you play on easy for real now.
+    secondarySplashDuration: 0
     stepEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -2592,6 +2604,142 @@ Transform:
   m_Father: {fileID: 1141762051}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -178.102}
+--- !u!1 &489341119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 489341120}
+  - component: {fileID: 489341122}
+  - component: {fileID: 489341121}
+  m_Layer: 5
+  m_Name: TwotSplash-Main
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &489341120
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489341119}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1294233487}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -109}
+  m_SizeDelta: {x: 430, y: 73.5}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &489341121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489341119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'New Text
+
+    New Text'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 4333beef22c76d846a344a205818b436, type: 2}
+  m_sharedMaterial: {fileID: 4820012025836748855, guid: 4333beef22c76d846a344a205818b436,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 28
+  m_fontSizeBase: 28
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 1024
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: -15.59
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &489341122
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489341119}
+  m_CullTransparentMesh: 0
 --- !u!1 &489586692
 GameObject:
   m_ObjectHideFlags: 0
@@ -2630,11 +2778,11 @@ RectTransform:
   m_Father: {fileID: 1111052810}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 209.5, y: 150}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -130, y: 130}
   m_SizeDelta: {x: 309.5879, y: 107.80548}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &489586695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4293,7 +4441,7 @@ GameObject:
   - component: {fileID: 856640595}
   - component: {fileID: 856640594}
   m_Layer: 5
-  m_Name: TwotorialStep
+  m_Name: TwotorialInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4313,11 +4461,11 @@ RectTransform:
   m_Father: {fileID: 99233313}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20, y: -90}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 114.00945, y: 0}
   m_SizeDelta: {x: 228.01886, y: 70.00537}
-  m_Pivot: {x: 1, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &856640594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4337,7 +4485,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 'New Text
+
+    line'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fa0cf85b1951b2147adcbf84fa485b9c, type: 2}
   m_sharedMaterial: {fileID: -3703297914515885410, guid: fa0cf85b1951b2147adcbf84fa485b9c,
@@ -4365,19 +4515,19 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 3
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -22.87
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -4401,7 +4551,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: -34.40796}
+  m_margin: {x: -101.33978, y: 15.700073, z: -103.21405, w: -156.08752}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -10908,11 +11058,11 @@ RectTransform:
   m_Father: {fileID: 1111052810}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -55, y: 150}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 130, y: 130}
   m_SizeDelta: {x: 309.5879, y: 107.80548}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1157885547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11162,6 +11312,58 @@ Transform:
   m_Father: {fileID: 867334402}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1294233486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1294233487}
+  - component: {fileID: 1294233488}
+  m_Layer: 5
+  m_Name: TwotorialPopups
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1294233487
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294233486}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 489341120}
+  - {fileID: 1748214514}
+  m_Father: {fileID: 173261480}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1294233488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294233486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40604f044d8fa1348bdc38eca442d2a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  twotMainSplash: {fileID: 489341121}
+  twotSecondarySplash: {fileID: 1748214515}
 --- !u!1 &1330669720
 GameObject:
   m_ObjectHideFlags: 0
@@ -11268,16 +11470,13 @@ MonoBehaviour:
     weight: 40
   - shape: {fileID: 5242248324596916550, guid: c69a8d53ad4c76f45bbc3d45acb86c8e, type: 3}
     dontSpawn: 1
-    weight: 0
+    weight: 10
   - shape: {fileID: 5242248324596916550, guid: aa0b48b4afd46014988c2ca31c93a3b4, type: 3}
     dontSpawn: 1
-    weight: 0
+    weight: 10
   - shape: {fileID: 5242248324596916550, guid: 33c4bc17339e8764186ed749b2eb5d7c, type: 3}
     dontSpawn: 1
-    weight: 0
-  - shape: {fileID: 5205093540449986666, guid: 205e505ce5209c7489513d1bbc88032e, type: 3}
-    dontSpawn: 1
-    weight: 0
+    weight: 10
   powerupArray:
   - powerup: {fileID: 5242248324596916550, guid: c69a8d53ad4c76f45bbc3d45acb86c8e,
       type: 3}
@@ -12641,6 +12840,142 @@ Transform:
   m_Father: {fileID: 1331555824}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1748214513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1748214514}
+  - component: {fileID: 1748214516}
+  - component: {fileID: 1748214515}
+  m_Layer: 5
+  m_Name: TwotSplash-Secondary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1748214514
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748214513}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1294233487}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -189}
+  m_SizeDelta: {x: 430, y: 48.099976}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1748214515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748214513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'New Text
+
+    New Text'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 652b21f33916aab478aab9dac3d1a97b, type: 2}
+  m_sharedMaterial: {fileID: 7679688032246958454, guid: 652b21f33916aab478aab9dac3d1a97b,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 18
+  m_fontSizeBase: 18
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: -16.26
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1748214516
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748214513}
+  m_CullTransparentMesh: 0
 --- !u!1 &1762802174
 GameObject:
   m_ObjectHideFlags: 0
@@ -13572,7 +13907,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1951646502
 Transform:
   m_ObjectHideFlags: 0
@@ -13601,9 +13936,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40604f044d8fa1348bdc38eca442d2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  twotMainSplash: {fileID: 1440485960}
-  twotMainSplash_Shadow: {fileID: 1434629843}
-  twotSecondarySplash: {fileID: 607575678}
+  twotMainSplash: {fileID: 0}
+  twotSecondarySplash: {fileID: 0}
 --- !u!1 &1955431270
 GameObject:
   m_ObjectHideFlags: 0

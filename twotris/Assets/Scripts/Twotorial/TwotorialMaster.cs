@@ -35,10 +35,12 @@ public class TwotorialMaster : MonoBehaviour
         public bool mainSplashEnabled;
         [TextArea(1, 3)]
         public string mainSplashText;
+        public float mainSplashDuration;
         [Space(10)]
         public bool secondarySplashEnabled;
         [TextArea(1, 2)]
         public string secondarySplashText;
+        public float secondarySplashDuration;
 
         [Header("Event")]
         public UnityEvent stepEvent;
@@ -134,7 +136,7 @@ public class TwotorialMaster : MonoBehaviour
                 gameMaster.middle.sRight.clearBlocks();
 
                 //fill first three layers with empty blocks 
-                for (int h = 0; h < 5; h++)
+                for (int h = 0; h < twotCurrentStep.includedInts[0].Int; h++)
                 {
                     for (int w = 0; w < TetrisScreen.Width; w++)
                     {
@@ -160,6 +162,12 @@ public class TwotorialMaster : MonoBehaviour
                 gameMaster.middle.sRight.hasActiveBlock = false;
 
                 gameMaster.twotorialEnabled = false;
+
+                //enable powerups
+                foreach (MiddlePart.tetrominoes tetro in gameMaster.middle.tetrominoArray)
+                {
+                    tetro.dontSpawn = false;
+                }
 
                 gameMaster.state = GameMaster.GameStates.GAME_PLAYING;
                 break;
@@ -336,11 +344,39 @@ public class TwotorialMaster : MonoBehaviour
         if (remainingTime != 999)
             time = remainingTime;
 
+        debugInfo = debugInfo + "==== Next Step ========\n";
+
         if (step.stepTimedEnabled)
-            debugInfo = debugInfo + Math.Round(time, 2).ToString() + "s\n";
+            debugInfo = debugInfo + "+" + time.ToString("0.0") + "s\n";
 
         if (step.evenetEndEnabled)
-            debugInfo = debugInfo + "Event triggered";
+            debugInfo = debugInfo + "+Event triggered\n";
+
+        if (step.includedGameObjects.Length > 0)
+        {                            
+            debugInfo = debugInfo + "==== Game Objects =====\n";
+
+            for (int i = 0; i < step.includedGameObjects.Length; i++)
+            {
+                string name = step.includedGameObjects[i].name;
+                GameObject go = step.includedGameObjects[i].gameObject;
+
+                debugInfo = debugInfo + i.ToString() + " - name: " + name + " - " + go.name + "\n";
+            }
+        }
+
+        if (step.includedInts.Length > 0)
+        {
+            debugInfo = debugInfo + "==== Integers =========\n";
+
+            for (int n = 0; n < step.includedInts.Length; n++)
+            {
+                string name = step.includedInts[n].name;
+                int value = step.includedInts[n].Int;
+
+                debugInfo = debugInfo + n.ToString() + " - name: " + name + " - value: " + value.ToString() + "\n";
+            }
+        }
 
         debugStepUI.text = debugInfo;
     }

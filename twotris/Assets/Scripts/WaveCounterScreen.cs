@@ -21,9 +21,12 @@ public class WaveCounterScreen : MonoBehaviour
 
 	private GameObject currentBlock;
 
+	private bool isLeft;
+
 	private void Start()
 	{
 		StartCoroutine(WaitABit());
+		isLeft = transform.parent.name.Contains("Left");
 	}
 
 	private void Update()
@@ -34,11 +37,13 @@ public class WaveCounterScreen : MonoBehaviour
 			currentBlock.GetComponent<WaveSquareScript>().Disappear();
 	}
 
-	public void UpdateBlocks()
+	public void UpdateBlocks(int maxScreenClears)
 	{
 		//width = 7;//Mathf.Abs(marginLeft.transform.position.x) + Mathf.Abs(marginRight.transform.position.x);
 
-		number = gameMaster.curDifficulty.screensClears;
+		DeleteBlocks();
+
+		number = maxScreenClears;
 
 		singleBlockWidth = width / number;
 
@@ -50,7 +55,16 @@ public class WaveCounterScreen : MonoBehaviour
 
 			obj.transform.localScale = new Vector3(singleBlockWidth - 0.1f, obj.transform.localScale.y);
 			obj.transform.parent = transform;
+			obj.tag = isLeft ? "WaveCounterBlockL" : "WaveCounterBlock"; //kept deleting
 			obj.name ="block" + i.ToString();
+		}
+	}
+
+	private void DeleteBlocks()
+    {
+		foreach (GameObject block in GameObject.FindGameObjectsWithTag(isLeft ? "WaveCounterBlockL" : "WaveCounterBlock"))
+        {
+			Destroy(block);
 		}
 	}
 
@@ -58,7 +72,7 @@ public class WaveCounterScreen : MonoBehaviour
 	{
 		yield return null;
 
-		UpdateBlocks();
+		UpdateBlocks(gameMaster.curDifficulty.screensClears);
 
 		yield break;
 	}

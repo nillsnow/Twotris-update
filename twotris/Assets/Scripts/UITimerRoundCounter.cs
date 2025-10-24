@@ -13,37 +13,72 @@ public class UITimerRoundCounter : MonoBehaviour
 
 	private void Update()
 	{
-		if (gameMaster.state == GameMaster.GameStates.GAME_START)
-		{
-			//start with 0 time remaining
-			UpdateRoundTimer(0);
+		int maxRounds;
+		float remainingRoundTime;
+		int roundsRemaining;
 
-			//update round count
-			int maxRounds = gameMaster.curDifficulty.screensClears;
-			UpdateRoundNumber(maxRounds, maxRounds);
+		switch (gameMaster.state)
+        {
+			case GameMaster.GameStates.GAME_START:
+				//start with 0 time remaining
+				UpdateRoundTimer(0);
+
+				//update round count
+				maxRounds = gameMaster.curDifficulty.screensClears;
+				UpdateRoundNumber(maxRounds, maxRounds);
+				break;
+			case GameMaster.GameStates.GAME_PLAYING:
+				//update timer
+				remainingRoundTime = gameMaster.screenClearRemainingTime;
+				UpdateRoundTimer(remainingRoundTime);
+
+				//update round counter
+				maxRounds = gameMaster.curDifficulty.screensClears;
+				roundsRemaining = maxRounds - gameMaster.screnClearsDone;
+				UpdateRoundNumber(roundsRemaining, maxRounds);
+				break;
+			case GameMaster.GameStates.GAME_END:
+				//end with 0 trime remaining
+				UpdateRoundTimer(0);
+
+				//end with 0 rounds remaining
+				maxRounds = gameMaster.curDifficulty.screensClears;
+				UpdateRoundNumber(0, maxRounds);
+				break;
+
+
+			case GameMaster.GameStates.GAME_NONE:
+				ToggleTextVisibility(false, false);
+				break;
+
+
+			case GameMaster.GameStates.TWOTORIAL_COUNTDOWN:
+				ToggleTextVisibility(true, false);
+
+				//update timer
+				remainingRoundTime = gameMaster.screenClearRemainingTime;
+				UpdateRoundTimer(remainingRoundTime);
+				break;
+			case GameMaster.GameStates.TWOTORIAL_ROUNDS:
+				ToggleTextVisibility(true, true);
+				//update timer
+				remainingRoundTime = gameMaster.screenClearRemainingTime;
+				UpdateRoundTimer(remainingRoundTime);
+
+				//update round counter
+				maxRounds = gameMaster.curDifficulty.screensClears;
+				roundsRemaining = maxRounds - gameMaster.screnClearsDone;
+				UpdateRoundNumber(roundsRemaining, maxRounds);
+				break;
+
 		}
+	}
 
-		if (gameMaster.state == GameMaster.GameStates.GAME_PLAYING)
-		{
-			//update timer
-			float remainingRoundTime = gameMaster.screenClearRemainingTime;
-			UpdateRoundTimer(remainingRoundTime);
-
-			//update round counter
-			int maxRounds = gameMaster.curDifficulty.screensClears;
-			int roundsRemaining = maxRounds - gameMaster.screnClearsDone; ;
-			UpdateRoundNumber(roundsRemaining, maxRounds);
-		}
-
-		if (gameMaster.state == GameMaster.GameStates.GAME_END)
-		{
-			//end with 0 trime remaining
-			UpdateRoundTimer(0);
-
-			//end with 0 rounds remaining
-			int maxRounds = gameMaster.curDifficulty.screensClears;
-			UpdateRoundNumber(0, maxRounds);
-		}
+	public void ToggleTextVisibility(bool timerVisibility, bool counterVisibility)
+	{
+		roundTimer.gameObject.SetActive(timerVisibility);
+		roundTimerShadow.gameObject.SetActive(timerVisibility);
+		roundCounter.gameObject.SetActive(counterVisibility);
 	}
 
 	public void UpdateRoundTimer(float time)

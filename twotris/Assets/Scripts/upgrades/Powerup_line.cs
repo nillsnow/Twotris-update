@@ -14,6 +14,7 @@ public class Powerup_line : MonoBehaviour
     {
         self = GetComponent<TetrisBlock>();
         screen = self.screen;
+        screen.linefilles = screen.linefilles + 1;
 
         int selfRoundedX = Mathf.RoundToInt(transform.position.x);
         int selfRoundedY = Mathf.RoundToInt(transform.position.y);

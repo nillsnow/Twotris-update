@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 1055388471080696238}
   - component: {fileID: 7560409145369471771}
   - component: {fileID: 1055388471080696239}
+  - component: {fileID: -5866832712005588912}
   m_Layer: 0
   m_Name: TextPopUp
-  m_TagString: Untagged
+  m_TagString: PopUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,3 +127,14 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!210 &-5866832712005588912
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055388471080696225}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5

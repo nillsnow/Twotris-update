@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TextPopUp : MonoBehaviour
 {
-    public void SpawnPopUp(string text, int importance)
+    public void SpawnPopUp(string text, int importance, bool staying)
     {
         GetComponent<TextMesh>().text = text;
 
@@ -18,6 +18,11 @@ public class TextPopUp : MonoBehaviour
             GetComponent<TextMesh>().color = new Color(0.9686274510f, 0.8745098039f, 0.5254901961f);
             GetComponent<TextMesh>().fontSize = 64;
         }
+
+        if (!staying)
+            return;
+
+        GetComponent<Animator>().SetBool("Staying", staying);
     }
 
     public void EndPopUp()

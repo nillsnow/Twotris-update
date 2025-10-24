@@ -5,10 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
+    public bool twotorialEnabled;
+    private int TWOTORIAL_DIFFICULTY_INDEX = 0;
     public MiddlePart middle;
     public Camera cam;
 
-    [System.Serializable] //difficulty
+    [System.Serializable]
     public class Difficulty
     {
         public string difficultyName;
@@ -40,16 +42,21 @@ public class GameMaster : MonoBehaviour
     public int currentDifficultyIndex;
 
     public enum GameStates {
-        GAME_NONE,      //before start
-        GAME_START,     //start countdown
-        GAME_PLAYING,   //self descriptive
-        GAME_PAUSED,    //self descriptive
-        GAME_END,       //self descriptive
+        GAME_NONE,          //before start
+        GAME_START,         //start countdown
+        GAME_PLAYING,       //
+        GAME_PAUSED,        //
+        GAME_END,           //
+        TWOTORIAL_START,    //twotorial setup
+        TWOTORIAL_PLAYING,  //
+        TWOTORIAL_SPECIFIC_PIECE,
+        TWOTORIAL_COUNTDOWN,
+        TWOTORIAL_ROUNDS,
     };
 
     [HideInInspector]
     public float nextTetrominoSpawn = 0.0f;
-    [HideInInspector]
+    //[HideInInspector]
     public float nextScreenClear = 0.0f;
     [HideInInspector]
     public float screenClearRemainingTime = 0.0f;
@@ -84,7 +91,8 @@ public class GameMaster : MonoBehaviour
 
     private void Start()
     {
-        state = GameStates.GAME_START;
+        state = twotorialEnabled ? GameStates.TWOTORIAL_START : GameStates.GAME_START;
+   
         currentDifficultyIndex = MenuInformation.Difficulty;
     }
 
@@ -106,55 +114,22 @@ public class GameMaster : MonoBehaviour
                 curDifficulty = difficulties[currentDifficultyIndex];
                 screnClearsDone = 0;
 
-                middle.gravityScale = curDifficulty.tetrominoGravity;
-                middle.gravityScalePowerup = curDifficulty.powerupGravity;
-
-                //grabby speed
-                middle.pLeft.speed = curDifficulty.grabbySpeed;
-                middle.pRight.speed = curDifficulty.grabbySpeed;
-
-                //fall time
-                middle.sLeft.fallTime = curDifficulty.tetrominoFallSpeed;
-                middle.sRight.fallTime = curDifficulty.tetrominoFallSpeed;
-
-                //score
-                middle.sLeft.scorePerLine = curDifficulty.scorePerLine;
-                middle.sLeft.scorePerBlock = curDifficulty.scorePerBlock;
-
-                middle.sRight.scorePerLine = curDifficulty.scorePerLine;
-                middle.sRight.scorePerBlock = curDifficulty.scorePerBlock;
-
-                nextScreenClear = Time.time + curDifficulty.screenClearDelay;
-
-                //bindings
-                if (MenuInformation.lUp == KeyCode.None) //if we didnt start from menu (for debug)
-				{
-                    middle.sLeft.keyUp      = KeyCode.W;
-                    middle.sLeft.keyDown    = KeyCode.S;
-                    middle.sLeft.keyLeft    = KeyCode.A;
-                    middle.sLeft.keyRight   = KeyCode.D;
-
-                    middle.sRight.keyUp     = KeyCode.UpArrow;
-                    middle.sRight.keyDown   = KeyCode.DownArrow;
-                    middle.sRight.keyLeft   = KeyCode.LeftArrow;
-                    middle.sRight.keyRight  = KeyCode.RightArrow;
-                }
-                else
-				{
-                    middle.sLeft.keyUp      = MenuInformation.lUp;
-                    middle.sLeft.keyDown    = MenuInformation.lDown;
-                    middle.sLeft.keyLeft    = MenuInformation.lLeft;
-                    middle.sLeft.keyRight   = MenuInformation.lRight;
-
-                    middle.sRight.keyUp     = MenuInformation.rUp;
-                    middle.sRight.keyDown   = MenuInformation.rDown;
-                    middle.sRight.keyLeft   = MenuInformation.rLeft;
-                    middle.sRight.keyRight  = MenuInformation.rRight;
-				}
+                SetGameVariables();
 
                 //player names
                 leftName = MenuInformation.leftName;
                 rightName = MenuInformation.rightName;
+
+                //update round blocks above screens
+                middle.sLeft.waveCounter.UpdateBlocks(curDifficulty.screensClears);
+                middle.sRight.waveCounter.UpdateBlocks(curDifficulty.screensClears);
+
+                //prevent splash in Twotorial
+                if (twotorialEnabled)
+                {
+                    state = GameStates.GAME_PLAYING;
+                    break;
+                }
 
                 if (startCountdown_ == null)
                     startCountdown_ = StartCoroutine(Countdown());
@@ -167,8 +142,11 @@ public class GameMaster : MonoBehaviour
                 {
                     nextTetrominoSpawn = Time.time + curDifficulty.tetrominoSpawn + (Random.value - 0.5f);
                     middle.spawnPiece();
+
                     if (Random.value > 0.8) //special powerups based on score
+                    {
                         middle.spawnPieceSide(); 
+                    }
                 }
 
                 if (Time.time > nextScreenClear) //clearing screen
@@ -180,14 +158,16 @@ public class GameMaster : MonoBehaviour
 
                 screenClearRemainingTime = nextScreenClear - Time.time;
 
-                if (screnClearsDone >= curDifficulty.screensClears)
+                if (screnClearsDone >= curDifficulty.screensClears && !twotorialEnabled)
+                {
                     state = GameStates.GAME_END; //end game if screen clears
+                }
                 break;
             case GameStates.GAME_PAUSED: //game PAUSED--------------------
                 break;
             case GameStates.GAME_END: //game END--------------------
-
-                StopCoroutine(tickingCoroutine);
+                if (!twotorialEnabled)
+                    StopCoroutine(tickingCoroutine);
 
                 if (endScreen_ == null)
                     endScreen_ = StartCoroutine(EndScreen());
@@ -195,9 +175,126 @@ public class GameMaster : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Escape))
                     transitionManager.GotoMenu();
                 break;
+            case GameStates.TWOTORIAL_START: //######################################## TWOTORIAL
+                Debug.Log("Twotorial trying to start");
+
+                //restart game if twotorial missing
+                if (!twotorialEnabled)
+                    state = GameStates.GAME_START;
+
+                curDifficulty = difficulties[TWOTORIAL_DIFFICULTY_INDEX];
+                currentDifficultyIndex = TWOTORIAL_DIFFICULTY_INDEX;
+
+                SetGameVariables();
+
+                //try to communicate with the TwotorialMaster, restart if missing
+                TwotorialMaster twotorialMaster;
+                if(!TryGetComponent(out twotorialMaster))
+                {
+                    state = GameStates.GAME_START;
+                    Debug.LogError("TwotorialMaster missing!");
+                }
+                state = GameStates.GAME_NONE; //now it's up to the twotorial master
+
+                twotorialMaster.TwotorialSetup(this);
+                break;
+            case GameStates.TWOTORIAL_PLAYING:
+                if (Time.time > nextTetrominoSpawn) //spawning tetrominos
+                {
+                    nextTetrominoSpawn = Time.time + curDifficulty.tetrominoSpawn + (Random.value - 0.5f);
+                    middle.spawnPiece();
+                }
+                break;
+            case GameStates.TWOTORIAL_SPECIFIC_PIECE:
+                break;
+            case GameStates.TWOTORIAL_COUNTDOWN:
+            case GameStates.TWOTORIAL_ROUNDS:
+                if (Time.time > nextScreenClear) //clearing screen
+                {
+                    nextScreenClear = Time.time + curDifficulty.screenClearDelay;
+                    screnClearsDone++;
+                }
+
+                screenClearRemainingTime = nextScreenClear - Time.time;
+                break;
             default:
                 break;
         }
+    }
+    
+    private void SetGameVariables()
+    {
+        middle.gravityScale = curDifficulty.tetrominoGravity;
+        middle.gravityScalePowerup = curDifficulty.powerupGravity;
+
+        //grabby speed
+        middle.pLeft.speed = curDifficulty.grabbySpeed;
+        middle.pRight.speed = curDifficulty.grabbySpeed;
+
+        //fall time
+        middle.sLeft.fallTime = curDifficulty.tetrominoFallSpeed;
+        middle.sRight.fallTime = curDifficulty.tetrominoFallSpeed;
+
+        //score
+        middle.sLeft.scorePerLine = curDifficulty.scorePerLine;
+        middle.sLeft.scorePerBlock = curDifficulty.scorePerBlock;
+
+        middle.sRight.scorePerLine = curDifficulty.scorePerLine;
+        middle.sRight.scorePerBlock = curDifficulty.scorePerBlock;
+
+        nextScreenClear = Time.time + curDifficulty.screenClearDelay;
+
+        //bindings
+        if (MenuInformation.lUp == KeyCode.None) //if we didnt start from menu (for debug)
+        {
+            middle.sLeft.keyUp = KeyCode.W;
+            middle.sLeft.keyDown = KeyCode.S;
+            middle.sLeft.keyLeft = KeyCode.A;
+            middle.sLeft.keyRight = KeyCode.D;
+
+            middle.sRight.keyUp = KeyCode.UpArrow;
+            middle.sRight.keyDown = KeyCode.DownArrow;
+            middle.sRight.keyLeft = KeyCode.LeftArrow;
+            middle.sRight.keyRight = KeyCode.RightArrow;
+        }
+        else
+        {
+            middle.sLeft.keyUp = MenuInformation.lUp;
+            middle.sLeft.keyDown = MenuInformation.lDown;
+            middle.sLeft.keyLeft = MenuInformation.lLeft;
+            middle.sLeft.keyRight = MenuInformation.lRight;
+
+            middle.sRight.keyUp = MenuInformation.rUp;
+            middle.sRight.keyDown = MenuInformation.rDown;
+            middle.sRight.keyLeft = MenuInformation.rLeft;
+            middle.sRight.keyRight = MenuInformation.rRight;
+        }
+
+        //player names
+        leftName = MenuInformation.leftName;
+        rightName = MenuInformation.rightName;
+
+        //update round blocks above screens
+        middle.sLeft.waveCounter.UpdateBlocks(curDifficulty.screensClears);
+        middle.sRight.waveCounter.UpdateBlocks(curDifficulty.screensClears);
+    }
+
+    public void ResetRoundTime()
+    {
+        nextScreenClear = Time.time + curDifficulty.screenClearDelay;
+    }
+
+    public void StartTicking()
+    {
+        if (tickingCoroutine == null)
+            tickingCoroutine = StartCoroutine(CountdownTicking());
+
+        nextScreenClear = Time.time + curDifficulty.screenClearDelay;
+    }
+
+    public void EndTicking()
+    {
+        StopCoroutine(tickingCoroutine);
     }
 
     void SetSplashEnable(bool val)
@@ -287,9 +384,16 @@ public class GameMaster : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         SetSplashEnable(true);
-        SetSplashText("GAME");
-
         splashText.GetComponent<Animator>().SetTrigger("Pulse");
+
+        if (twotorialEnabled)
+        {
+            SetSplashSize(150);
+            SetSplashText("That's all! Thanks for playing!\nPress Escape to play again.");
+            yield break;
+        }
+
+        SetSplashText("GAME");
 
         yield return new WaitForSeconds(3f);
 

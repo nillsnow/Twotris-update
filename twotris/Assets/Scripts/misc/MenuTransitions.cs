@@ -7,6 +7,7 @@ public class MenuTransitions : MonoBehaviour
 {
 	private Animator anim;
 	private Coroutine transition_;
+	private bool transitionRunning = false;
 
 	private void Start()
 	{
@@ -15,8 +16,12 @@ public class MenuTransitions : MonoBehaviour
 		anim.SetTrigger("Fadein");
 	}
 
+    private void Awake()
+    {
+		transitionRunning = false;
+	}
 
-	public void QuitGame()
+    public void QuitGame()
 	{
 		Application.Quit();
 	}
@@ -29,15 +34,26 @@ public class MenuTransitions : MonoBehaviour
 
 	public void GotoGame()
 	{
-		transition_ = StartCoroutine(Transition());
+		if (transitionRunning)
+			return;
+		transition_ = StartCoroutine(Transition("Tetris"));
 	}
 
-	IEnumerator Transition()
+	public void GotoTwotorial()
+    {
+		if (transitionRunning)
+			return;
+		transition_ = StartCoroutine(Transition("Twotorial"));
+	}
+
+	IEnumerator Transition(string newScene)
 	{
+		transitionRunning = true;
+
 		anim.SetTrigger("Fadeout");
 
 		yield return new WaitForSeconds(0.7f);
 
-		SceneManager.LoadScene("Tetris");
+		SceneManager.LoadScene(newScene);
 	}
 }

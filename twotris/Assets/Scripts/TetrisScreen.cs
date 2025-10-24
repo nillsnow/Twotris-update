@@ -51,6 +51,11 @@ public class TetrisScreen : MonoBehaviour
     public GameObject PopUp;
 
     [Space(10)]
+    public int explosions = 0;
+    public int linefilles = 0;
+    public int timewindups = 0;
+
+    [Space(10)]
     public Shaker CamShaker;
     public ShakePreset CamShakePreset;
     [Space(5)]
@@ -70,6 +75,12 @@ public class TetrisScreen : MonoBehaviour
 
     [Space(5)]
     public WaveCounterScreen waveCounter;
+    private List<GameMaster.GameStates> waveEnabledStates = new List<GameMaster.GameStates>
+    {
+        GameMaster.GameStates.GAME_PLAYING,
+        GameMaster.GameStates.TWOTORIAL_COUNTDOWN,
+        GameMaster.GameStates.TWOTORIAL_ROUNDS,
+    };
 
     [Space(5)]
     public Animator overflowAnimator;
@@ -79,7 +90,8 @@ public class TetrisScreen : MonoBehaviour
 
     public MiddlePart middle;
 
-	private void Start()
+
+    private void Start()
 	{
         waveCounter.gameMaster = gameMaster;
     }
@@ -96,7 +108,7 @@ public class TetrisScreen : MonoBehaviour
             Vector3 pos = waveBackground.transform.position;
 
             float desiredHeight = 0f;
-            if (gameMaster.state == GameMaster.GameStates.GAME_PLAYING)
+            if (waveEnabledStates.Contains(gameMaster.state))
                 desiredHeight = (1 - (gameMaster.nextScreenClear - Time.time) / gameMaster.curDifficulty.screenClearDelay) * 12.5f;
 
             float height = desiredHeight - pos.y;
@@ -207,7 +219,7 @@ public class TetrisScreen : MonoBehaviour
                         scoreNumber += scorePerBlock;
                         blocks++;
                     }
-                    childBlock.gameObject.SetActive(false);
+                    childBlock.gameObject.SetActive(gameMaster.twotorialEnabled);
                     yield return wait;
                 }
                 continue;
@@ -221,11 +233,12 @@ public class TetrisScreen : MonoBehaviour
                 scoreNumber += scorePerBlock;
                 blocks++;
             }
-            block.gameObject.SetActive(false);
+            block.gameObject.SetActive(gameMaster.twotorialEnabled);
             yield return wait;
         }
 
-        clearBlocks();
+        if (!gameMaster.twotorialEnabled)
+            clearBlocks();
         curScore = lines * scorePerLine + blocks * scorePerBlock;
         score += curScore;
         scoreNumber = score; //setting score text 
@@ -253,7 +266,7 @@ public class TetrisScreen : MonoBehaviour
             {
                 foreach (Transform childBlock in block)
                 {
-                    if (!block.name.StartsWith("NoPoints"))
+                    if (!childBlock.name.StartsWith("NoPoints"))
                     {
                         blocks++;
                     }
@@ -291,7 +304,7 @@ public class TetrisScreen : MonoBehaviour
     public void SpawnScorePopUp(string text, Vector3 pos, int importance = 0) //0 = basic, 1 = big scor))
     {
         GameObject item = Instantiate(PopUp, pos, Quaternion.identity);
-        item.GetComponent<TextPopUp>().SpawnPopUp(text, importance);
+        item.GetComponent<TextPopUp>().SpawnPopUp(text, importance, gameMaster.twotorialEnabled);
     }
 
     public bool DestroyCube(float x, float y)
@@ -311,7 +324,7 @@ public class TetrisScreen : MonoBehaviour
         return true;
     }
 
-    void clearBlocks()
+    public void clearBlocks()
     {
         grid = new Transform[Width, Height];
 

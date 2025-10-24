@@ -17,6 +17,8 @@ public class Powerup_time : MonoBehaviour
     {
         self = GetComponent<TetrisBlock>();
         screen = self.screen;
+        screen.timewindups = screen.timewindups + 1;
+
         timerObj = GameObject.FindObjectOfType<GameMaster>();
         timer = timerObj.GetComponent<GameMaster>();
 

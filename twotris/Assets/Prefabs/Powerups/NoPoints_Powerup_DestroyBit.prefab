@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 3124187302249622919}
   - component: {fileID: 1537615482393055246}
   m_Layer: 0
-  m_Name: Powerup_DestroyBit
+  m_Name: NoPoints_Powerup_DestroyBit
   m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

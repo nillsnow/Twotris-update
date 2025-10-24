@@ -90,6 +90,7 @@ public class MagnetPickupTetroManager : MonoBehaviour
 		magnetRight.priority = 1 - rand;
 	}
 	//...that is switched each time a 0 priority magnet picks up a piece (getting rid of their burden)
+
 	public void ReverseMagnetPriority()
 	{
 		magnetLeft.priority = 1 - magnetLeft.priority;

@@ -176,7 +176,7 @@ public class TetrisBlock : MonoBehaviour
         }
     }
 
-    void addToGrid()
+    public void addToGrid(bool silent = false)
     {
         foreach (Transform children in transform)
         {
@@ -191,6 +191,9 @@ public class TetrisBlock : MonoBehaviour
         StopAllCoroutines();
 
         screen.wasJustPlaced = true;
+
+        if (silent)
+            return;
 
         screen.shakeCamera();
         screen.Thud();

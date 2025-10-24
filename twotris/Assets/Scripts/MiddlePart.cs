@@ -17,12 +17,12 @@ public class MiddlePart : MonoBehaviour
     public GameObject paddleLeft;
     [HideInInspector]
     public Grabby pLeft;
-    [Space]
-    public MagnetPickupTetroManager magnetPickupTetroManager;
-
     public GameObject paddleRight;
     [HideInInspector]
     public Grabby pRight;
+
+    [Space]
+    public MagnetPickupTetroManager magnetPickupTetroManager;
 
     [HideInInspector]
     public float gravityScale = 3f;
@@ -154,9 +154,9 @@ public class MiddlePart : MonoBehaviour
         Vector3 spawnPos = new Vector3(pos.x + Random.value * 3.6f - 1.8f, pos.y); //range from -1.8 > 1.8
 
         tetrominoes potentionalSpawn = tetrominoArray[Random.Range(0, tetrominoArray.Length)];
-        int chance = Random.Range(0, 100);
+        int chance = Random.Range(1, 100);
 
-        //if object weight (chance of spawn) over random number, then spawn. otherwise keep looping until
+        //if object weight (chance of spawn) is greater than a random number, then spawn. otherwise keep looping until
         //we get a suitable shape. chance will probably change over time
         if (potentionalSpawn.weight < chance || potentionalSpawn.dontSpawn)
         {
@@ -166,6 +166,15 @@ public class MiddlePart : MonoBehaviour
         }
 
         GameObject piece = Instantiate(potentionalSpawn.shape, spawnPos, Quaternion.identity);
+        piece.GetComponent<FallingTetromino>().Spawn(gravityScale, pieceScale);
+    }
+
+    public void spawnSpecificPiece(tetrominoes specificPiece)
+    {
+        Vector3 pos = position.transform.position;
+        Vector3 spawnPos = new Vector3(pos.x + Random.value * 3.6f - 1.8f, pos.y); //range from -1.8 > 1.8
+
+        GameObject piece = Instantiate(specificPiece.shape, spawnPos, Quaternion.identity);
         piece.GetComponent<FallingTetromino>().Spawn(gravityScale, pieceScale);
     }
 
@@ -191,7 +200,7 @@ public class MiddlePart : MonoBehaviour
     {
         //Debug.Log("side: " + pos.gameObject.name + " - isWinning: " + isWinning);
         powerups potentionalSpawn = powerupArray[Random.Range(0, powerupArray.Length)];
-        int chance = Random.Range(0, 100);
+        int chance = Random.Range(1, 100);
 
         int weight;
         int scoreDif = 0;
@@ -224,6 +233,15 @@ public class MiddlePart : MonoBehaviour
         Debug.Log("spawned: " + potentionalSpawn.powerup.name);
 
         GameObject piece = Instantiate(potentionalSpawn.powerup, pos.position, Quaternion.identity);
+        piece.GetComponent<FallingTetromino>().Spawn(gravityScalePowerup, pieceScale);
+    }
+
+    public void spawnSpecificPowerup(powerups powerup)
+    {
+        Vector3 pos = position.transform.position;
+        Vector3 spawnPos = new Vector3(pos.x + Random.value * 3.6f - 1.8f, pos.y); //range from -1.8 > 1.8
+
+        GameObject piece = Instantiate(powerup.powerup, spawnPos, Quaternion.identity);
         piece.GetComponent<FallingTetromino>().Spawn(gravityScalePowerup, pieceScale);
     }
 

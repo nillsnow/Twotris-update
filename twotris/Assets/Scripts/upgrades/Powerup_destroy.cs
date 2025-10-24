@@ -16,6 +16,7 @@ public class Powerup_destroy : MonoBehaviour
     {
         self = GetComponent<TetrisBlock>();
         screen = self.screen;
+        screen.explosions = screen.explosions + 1;
 
         int roundedX = Mathf.RoundToInt(transform.position.x);
         int roundedY = Mathf.RoundToInt(transform.position.y);
@@ -31,6 +32,7 @@ public class Powerup_destroy : MonoBehaviour
             if (screen.DestroyCube(roundedX, roundedY + i))
                 Instantiate(ParticleInstance, new Vector3(roundedX, roundedY + i, -1), Quaternion.identity);
         }
+
 
         self.screen.shakeCamera();
         var bruh = Instantiate(AudioSourceInstance);

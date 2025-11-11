@@ -23,14 +23,20 @@ public class Powerup_destroy : MonoBehaviour
 
         for (int i = -2; i <= 2; i++)
         {
-            if (screen.DestroyCube(roundedX + i, roundedY))
-                Instantiate(ParticleInstance, new Vector3(roundedX + i, roundedY, -1), Quaternion.identity);
+            screen.DestroyCube(roundedX + i, roundedY);
+            Instantiate(ParticleInstance, new Vector3(roundedX + i, roundedY, -1), Quaternion.identity);
+
+            /*if (screen.DestroyCube(roundedX + i, roundedY))
+                Instantiate(ParticleInstance, new Vector3(roundedX + i, roundedY, -1), Quaternion.identity);*/
         }
 
         for (int i = -2; i <= 2; i++)
         {
-            if (screen.DestroyCube(roundedX, roundedY + i))
-                Instantiate(ParticleInstance, new Vector3(roundedX, roundedY + i, -1), Quaternion.identity);
+            screen.DestroyCube(roundedX, roundedY + i);
+            Instantiate(ParticleInstance, new Vector3(roundedX, roundedY + i, -1), Quaternion.identity);
+
+            /*if (screen.DestroyCube(roundedX, roundedY + i))
+                Instantiate(ParticleInstance, new Vector3(roundedX, roundedY + i, -1), Quaternion.identity);*/
         }
 
 

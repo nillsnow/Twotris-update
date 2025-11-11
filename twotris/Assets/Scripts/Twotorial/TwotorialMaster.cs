@@ -35,12 +35,11 @@ public class TwotorialMaster : MonoBehaviour
         public bool mainSplashEnabled;
         [TextArea(1, 3)]
         public string mainSplashText;
-        public float mainSplashDuration;
         [Space(10)]
         public bool secondarySplashEnabled;
         [TextArea(1, 2)]
         public string secondarySplashText;
-        public float secondarySplashDuration;
+        public float SplashDuration;
 
         [Header("Event")]
         public UnityEvent stepEvent;
@@ -100,11 +99,13 @@ public class TwotorialMaster : MonoBehaviour
                 break;
             case 3:
                 gameMaster.state = GameMaster.GameStates.TWOTORIAL_SPECIFIC_PIECE;
+                nextTetrominoSpawn = Time.time + 1; //offset next tetro spawn so pieces don't spawn in one another
                 break;
             case 4:
                 gameMaster.state = GameMaster.GameStates.TWOTORIAL_SPECIFIC_PIECE;
                 break;
             case 5:
+                gameMaster.ResetRoundTime();
                 gameMaster.StartTicking();
                 gameMaster.state = GameMaster.GameStates.TWOTORIAL_COUNTDOWN;
                 break;
@@ -189,9 +190,9 @@ public class TwotorialMaster : MonoBehaviour
     {
         if (twotCurrentStep.spawnOnlyTetrominoe.shape != null)
         {
-            if ((Time.time + 1) > nextTetrominoSpawn) //spawning tetrominos
+            if (Time.time > nextTetrominoSpawn) //spawning tetrominos
             {
-                nextTetrominoSpawn = (Time.time + 1) + gameMaster.curDifficulty.tetrominoSpawn + (UnityEngine.Random.value - 0.5f);
+                nextTetrominoSpawn = Time.time + gameMaster.curDifficulty.tetrominoSpawn + (UnityEngine.Random.value - 0.5f);
                 gameMaster.middle.spawnSpecificPiece(twotCurrentStep.spawnOnlyTetrominoe);
             }
         }
@@ -245,7 +246,7 @@ public class TwotorialMaster : MonoBehaviour
                     EndCurrentStep();
                 break;
             case 10:
-                if (gameMaster.middle.sLeft.isDead || gameMaster.middle.sLeft.isDead)
+                if (gameMaster.middle.sLeft.isDead || gameMaster.middle.sRight.isDead)
                     EndCurrentStep();
                 break;
             default:
@@ -269,26 +270,41 @@ public class TwotorialMaster : MonoBehaviour
 
                 if (!isRunningStep)
                 {
-                    AdvanceStep();
+                    AdvanceStep(true);
                     yield break;
                 }
+
+                //splash timing
+                if (twotCurrentStep.SplashDuration > 0)
+                    if (totalTime < twotCurrentStep.stepLength - twotCurrentStep.SplashDuration)
+                        splashHandlerer.HideSplashGradually();
 
                 UpdateDebugString(twotCurrentStep, totalTime);
                 yield return null;
             }
 
-            AdvanceStep();
+            AdvanceStep(twotCurrentStep.SplashDuration == 0);
             yield break;
         }
 
         if (twotCurrentStep.evenetEndEnabled)
         {
+            float totalTime = 0;
+
             while (isRunningStep)
+            {
+                totalTime += Time.deltaTime;
+
+                if (twotCurrentStep.SplashDuration > 0)
+                    if (totalTime > twotCurrentStep.SplashDuration)
+                        splashHandlerer.HideSplashGradually();
+
                 yield return null;
+            }
 
-            Debug.Log("Event triggered!");
+            Debug.Log("Twotorial Event triggered!");
 
-            AdvanceStep();
+            AdvanceStep(true);
             yield break;
         }
 
@@ -313,10 +329,16 @@ public class TwotorialMaster : MonoBehaviour
         EvaluateStep(number);
     }
 
-    public void AdvanceStep()
+    public void AdvanceStep(bool AnimateSplash = false)
     {
         if (twotCurrentStepNumber == twotorialSteps.Length - 1)
             return;
+
+        if (AnimateSplash)
+        {
+            StartCoroutine(HideSplashAndAdvanceStep());
+            return;
+        }  
 
         if (isRunningStep)
         {
@@ -326,6 +348,24 @@ public class TwotorialMaster : MonoBehaviour
 
         int nextNum = twotCurrentStepNumber + 1;
         SetCurrentStep(nextNum);
+    }
+
+    IEnumerator HideSplashAndAdvanceStep()
+    {
+        splashHandlerer.HideSplashGradually();
+
+        yield return new WaitForSeconds(1); 
+
+        if (isRunningStep)
+        {
+            StopCoroutine(runStep);
+            isRunningStep = false;
+        }
+
+        int nextNum = twotCurrentStepNumber + 1;
+        SetCurrentStep(nextNum);
+
+        yield break;
     }
 
     public void EndCurrentStep()
@@ -339,6 +379,11 @@ public class TwotorialMaster : MonoBehaviour
     private void UpdateDebugString(TwotorialStep step, float remainingTime = 999)
     {
         string debugInfo = step.stepName + "\n";
+
+        debugInfo = debugInfo + "==== Splash Info ======\n";
+
+        bool animateSplashOnEnd = step.SplashDuration == 0;
+        debugInfo = debugInfo + "AnimateSplashOnEnd: " + animateSplashOnEnd.ToString() + (animateSplashOnEnd ? "" : " - " +step.SplashDuration+"s") + "\n";
 
         float time = step.stepLength;
         if (remainingTime != 999)

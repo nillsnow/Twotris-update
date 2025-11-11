@@ -52,13 +52,13 @@ public class UITimerRoundCounter : MonoBehaviour
 				break;
 
 
-			case GameMaster.GameStates.TWOTORIAL_COUNTDOWN:
+			/*case GameMaster.GameStates.TWOTORIAL_COUNTDOWN:
 				ToggleTextVisibility(true, false);
 
 				//update timer
 				remainingRoundTime = gameMaster.screenClearRemainingTime;
 				UpdateRoundTimer(remainingRoundTime);
-				break;
+				break;*/
 			case GameMaster.GameStates.TWOTORIAL_ROUNDS:
 				ToggleTextVisibility(true, true);
 				//update timer

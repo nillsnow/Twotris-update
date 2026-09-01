@@ -352,7 +352,7 @@ public class TetrisScreen : MonoBehaviour
     }
 
 
-    //camera shit aiodhbnsajofbajkdbahjifgbahjdahjkdfahjfklůabfa
+    //camera hit
     public void shakeCamera()
     {
         if (CamShaker)

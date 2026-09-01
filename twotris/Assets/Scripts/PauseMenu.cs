@@ -19,10 +19,10 @@ public class PauseMenu : MonoBehaviour
 		//transform.GetChild(0).gameObject.SetActive(false); //turn pause menu off at start
 		anim = GetComponent<Animator>();
 
-		StartCoroutine(FuckYouUnity());
+		StartCoroutine(LoveYouUnity());
 	}
 
-	IEnumerator FuckYouUnity()
+	IEnumerator LoveYouUnity()
 	{
 		yield return new WaitForSeconds(0.1f);
 		blackOverlay.SetActive(false);

@@ -19,7 +19,7 @@ public class MagnetPickupTetroManager : MonoBehaviour
 	}
 
 	/* called by each grabby to validate if they're in the right picking a tetromino up
-	 * used to check for piece duplication and other fuckery
+	 * used to check for piece duplication and other messery
 	 */
 	public void ValidatePickup(Grabby grabby, FallingTetromino tetro, Collider2D collision)
 	{

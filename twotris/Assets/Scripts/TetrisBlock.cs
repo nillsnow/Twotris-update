@@ -234,26 +234,3 @@ public class TetrisBlock : MonoBehaviour
         }
     }
 }
-
-/*
-poznámky k typkovi:
-
-- viteslav nezval
--intelektual
--basnik
-- moc basni
-- Romany, divadelni hry, pica
--socialisticky realismus, surrealismus
-- Zastaval moskevske procesy
-- rozesel se s skupinou surrealistu, ktery nemel moc rad nevim proc lol
-- PRONASLEDOVANY za protektoratu
-- 2.5 millionu nemcu z ceska slo a tam byl i viteslav
-- VOLAM NECO NARODU
-- Komousi nabizeli nejaky neco nevim proste nechapu to moc rychly  nemuzu si zapisovat
-- "MUSITE DELAT VELIKI KRASNI VECI! DNES SE MUZE SECKO"
-- MILACKU TY MAS V USTECH TRESNI, JAK CHUTNA TI? TAKOVE ODPOVEDI SE TI NEVRATI
-- NECHAPU TO PROSTE PROS SI TO MUSIME ZAPISOVAT KDYZ JE TO V UCEBNICI DO PRDELE
-
-Prazsky penis
-- muze se pokouset definovat jeho tajemnstvi
-*/
